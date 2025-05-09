@@ -13,6 +13,14 @@ module.exports = function (api) {
     ],
 
     plugins: [
+      [
+        "module-resolver",
+        {
+          alias: {
+            "tailwind.config": "./tailwind.config.js",
+          },
+        },
+      ],
       "@babel/plugin-proposal-export-namespace-from",
       "react-native-reanimated/plugin",
     ],
