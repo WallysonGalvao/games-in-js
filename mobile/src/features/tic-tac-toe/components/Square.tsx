@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Player } from "../types";
 
-import tailwindConfig from "tailwind.config";
+import tailwindConfig from "@/tailwind.config";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 const colors = resolveConfig(tailwindConfig).theme.colors;
