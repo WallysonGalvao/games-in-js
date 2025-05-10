@@ -39,7 +39,7 @@ export default function TicTacToe() {
   };
 
   return (
-    <View className="flex min-h-screen flex-col items-center justify-center bg-black">
+    <View className="flex min-h-screen flex-col items-center bg-black">
       <View className="w-full max-w-lg rounded-2xl p-8">
         <View className="mb-8 flex items-center justify-center gap-3">
           <Gamepad2 color="#F231A5" size={32} />
