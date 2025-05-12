@@ -14,6 +14,9 @@ export default {
           200: "#000010",
         },
       },
+      screens: {
+        xs: "375px",
+      },
     },
   },
   plugins: [],

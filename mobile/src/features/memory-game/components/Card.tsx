@@ -1,32 +1,94 @@
 import { Sparkles } from "lucide-react-native";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+import { cn } from "../lib/utils";
 
-function Card() {
-  const [isFlipped, setIsFlipped] = useState(false);
+const CARD_STYLES = {
+  base: "absolute flex h-full w-full items-center justify-center rounded-xl border-2 backface-hidden",
+  back: "border-white/20 bg-pink",
+  front: "border-purple-200 bg-white",
+};
+
+type CardProps = {
+  emoji: string;
+  isFlipped: boolean;
+  onClick: () => void;
+};
+
+const AnimatedSparkles = Animated.createAnimatedComponent(Sparkles);
+
+function Card({ emoji, isFlipped, onClick }: CardProps) {
+  const rotateY = useSharedValue(0);
 
   const handleClick = () => {
-    setIsFlipped(!isFlipped);
+    onClick();
+    rotateY.value = withTiming(isFlipped ? 0 : 180, { duration: 500 });
   };
 
-  return (
-    <Pressable
-      className="relative h-16 w-16 cursor-pointer"
-      onPress={handleClick}
-    >
-      {/* View do 3D */}
-      <View
-        className={`preserve-3d h-full w-full transition-transform duration-500 ${isFlipped && "rotate-y-180"}`}
-      >
-        {/* Card back */}
-        <View className="backface-hidden absolute flex h-full w-full items-center justify-center rounded-xl border-2 border-white/20 bg-pink">
-          <Sparkles className="h-6 w-6 text-white" />
-        </View>
+  const frontAnimatedStyle = useAnimatedStyle(() => {
+    const rotate = interpolate(rotateY.value, [0, 180], [180, 360]);
+    return {
+      transform: [{ rotateY: `${rotate}deg` }],
+      opacity: rotateY.value > 90 ? 1 : 0,
+    };
+  });
 
+  const backAnimatedStyle = useAnimatedStyle(() => {
+    const rotate = interpolate(rotateY.value, [0, 180], [0, 180]);
+    return {
+      transform: [{ rotateY: `${rotate}deg` }],
+      opacity: rotateY.value < 90 ? 1 : 0,
+    };
+  });
+
+  const sparklesAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withRepeat(
+        withSequence(
+          withTiming(1, { duration: 1000 }),
+          withTiming(0.5, { duration: 1000 }),
+        ),
+        -1,
+        true,
+      ),
+    };
+  });
+
+  useEffect(() => {
+    rotateY.value = withTiming(isFlipped ? 180 : 0, { duration: 500 });
+  }, [isFlipped, rotateY]);
+
+  return (
+    <Pressable className="m-1 h-16 w-16" onPress={handleClick}>
+      {/* View do 3D */}
+      <View className="h-full w-full">
         {/* Card front */}
-        <View className="backface-hidden rotate-y-180 absolute flex h-full w-full items-center justify-center rounded-xl border-2 border-purple-200 bg-white">
-          <Text>🍬</Text>
-        </View>
+        <Animated.View
+          className={cn(CARD_STYLES.base, CARD_STYLES.front)}
+          style={[frontAnimatedStyle]}
+        >
+          <Text>{emoji}</Text>
+        </Animated.View>
+
+        {/* Card back */}
+        <Animated.View
+          className={cn(CARD_STYLES.base, CARD_STYLES.back)}
+          style={[backAnimatedStyle]}
+        >
+          <AnimatedSparkles
+            className="h-6 w-6"
+            color="white"
+            style={[sparklesAnimatedStyle]}
+          />
+        </Animated.View>
       </View>
     </Pressable>
   );

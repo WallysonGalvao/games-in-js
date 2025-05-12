@@ -2508,6 +2508,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.shuffle@npm:^4.2.9":
+  version: 4.2.9
+  resolution: "@types/lodash.shuffle@npm:4.2.9"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: d9e25dc3550faabb2b85311e1f2da6f98aa089dc06a339aa8433004252a4a382adfbcde94bb0201c0edd6fd738d1d57e28840d210cf3f20040f1260783627cfe
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.16
+  resolution: "@types/lodash@npm:4.17.16"
+  checksum: 915618c5735b10007e0ed7d06fdce6b344f88fc721d492b189a69064bfd046d2382e1ba61d683eeb61cad60ca0286cd110e6fe0fa4ab2e99066a40478376831d
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 22.15.17
   resolution: "@types/node@npm:22.15.17"
@@ -3761,6 +3777,13 @@ __metadata:
   version: 1.0.4
   resolution: "clone@npm:1.0.4"
   checksum: d06418b7335897209e77bdd430d04f882189582e67bd1f75a04565f3f07f5b3f119a9d670c943b6697d0afb100f03b866b3b8a1f91d4d02d72c4ecf2bb64b5dd
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: acd3e1ab9d8a433ecb3cc2f6a05ab95fe50b4a3cfc5ba47abb6cbf3754585fcb87b84e90c822a1f256c4198e3b41c7f6c391577ffc8678ad587fc0976b24fd57
   languageName: node
   linkType: hard
 
@@ -5045,6 +5068,17 @@ __metadata:
     expo: "*"
     react: "*"
   checksum: fd3adfd3f1bacb06c244c4c21452de892c55fe2ee0eed9e9912292ceafb1cdb0ea58941c4f77395032f37321113321d23ac142d63b9d0d214b7821d78b74d60e
+  languageName: node
+  linkType: hard
+
+"expo-linear-gradient@npm:~14.1.4":
+  version: 14.1.4
+  resolution: "expo-linear-gradient@npm:14.1.4"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: eab8d01fcce1b8b42ea401c681b5151c3b161666fa3a00181fddae4fb64c23f65945afc60176f9c367fe6963fdd4192e5de86a8b50203581f99bcea872b11451
   languageName: node
   linkType: hard
 
@@ -7055,6 +7089,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.shuffle@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.shuffle@npm:4.2.0"
+  checksum: 3d451e16c18cd7e7c4c265199c87f0a1fff2976b8bf14d94de20a445e76f61a5c39b62181e5660e8f3a1602518b15a3d7d54732067cdef9d446e47d1e8f48938
+  languageName: node
+  linkType: hard
+
 "lodash.throttle@npm:^4.1.1":
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
@@ -7651,8 +7692,10 @@ __metadata:
     "@react-navigation/bottom-tabs": ^7.3.10
     "@react-navigation/elements": ^2.3.8
     "@react-navigation/native": ^7.1.6
+    "@types/lodash.shuffle": ^4.2.9
     "@types/react": ~19.0.10
     babel-plugin-module-resolver: ^5.0.2
+    clsx: ^2.1.1
     eslint: ^9.25.0
     eslint-config-expo: ~9.2.0
     expo: ~53.0.9
@@ -7661,6 +7704,7 @@ __metadata:
     expo-font: ~13.3.1
     expo-haptics: ~14.1.4
     expo-image: ~2.1.7
+    expo-linear-gradient: ~14.1.4
     expo-linking: ~7.1.5
     expo-router: ~5.0.6
     expo-splash-screen: ~0.30.8
@@ -7668,6 +7712,7 @@ __metadata:
     expo-symbols: ~0.4.4
     expo-system-ui: ~5.0.7
     expo-web-browser: ~14.1.6
+    lodash.shuffle: ^4.2.0
     lucide-react-native: ^0.509.0
     nativewind: ^4.1.23
     prettier: ^3.5.3
@@ -7683,6 +7728,7 @@ __metadata:
     react-native-svg-transformer: ^1.5.1
     react-native-web: ~0.20.0
     react-native-webview: 13.13.5
+    tailwind-merge: ^3.2.0
     tailwindcss: ^3.4.17
     typescript: ~5.8.3
   languageName: unknown
@@ -10090,6 +10136,13 @@ __metadata:
   bin:
     svgo: ./bin/svgo
   checksum: a3f8aad597dec13ab24e679c4c218147048dc1414fe04e99447c5f42a6e077b33d712d306df84674b5253b98c9b84dfbfb41fdd08552443b04946e43d03e054e
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "tailwind-merge@npm:3.2.0"
+  checksum: 942e86ef6fffd9b9bdb6ab41626ef013ebebca001e1b7c183a2c426ea7169a915d47485c2c4d73a91f4ff390df99645c262e47b8f0be8a7e18837b512f196068
   languageName: node
   linkType: hard
 
