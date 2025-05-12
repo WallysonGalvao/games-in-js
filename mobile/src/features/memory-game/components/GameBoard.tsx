@@ -20,9 +20,9 @@ function GameBoard({ cards, onCardClick }: GameBoardProps) {
       layout={LinearTransition.duration(500)}
       className="flex w-[70%] flex-row flex-wrap"
     >
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <View key={card.id} className="w-1/4 items-center">
-          <Card {...card} onClick={() => onCardClick(card.id)} />
+          <Card {...card} index={index} onClick={() => onCardClick(card.id)} />
         </View>
       ))}
     </Animated.View>
@@ -30,7 +30,3 @@ function GameBoard({ cards, onCardClick }: GameBoardProps) {
 }
 
 export default GameBoard;
-
-// 17h28
-// frango 1h10
-// feijao 50min

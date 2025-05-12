@@ -5,6 +5,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
   withRepeat,
   withSequence,
   withTiming,
@@ -20,13 +21,15 @@ const CARD_STYLES = {
 type CardProps = {
   emoji: string;
   isFlipped: boolean;
+  index: number;
   onClick: () => void;
 };
 
 const AnimatedSparkles = Animated.createAnimatedComponent(Sparkles);
 
-function Card({ emoji, isFlipped, onClick }: CardProps) {
+function Card({ emoji, isFlipped, index, onClick }: CardProps) {
   const rotateY = useSharedValue(0);
+  const rotateZ = useSharedValue(0);
 
   const handleClick = () => {
     onClick();
@@ -36,7 +39,7 @@ function Card({ emoji, isFlipped, onClick }: CardProps) {
   const frontAnimatedStyle = useAnimatedStyle(() => {
     const rotate = interpolate(rotateY.value, [0, 180], [180, 360]);
     return {
-      transform: [{ rotateY: `${rotate}deg` }],
+      transform: [{ perspective: 1000 }, { rotateY: `${rotate}deg` }],
       opacity: rotateY.value > 90 ? 1 : 0,
     };
   });
@@ -44,7 +47,7 @@ function Card({ emoji, isFlipped, onClick }: CardProps) {
   const backAnimatedStyle = useAnimatedStyle(() => {
     const rotate = interpolate(rotateY.value, [0, 180], [0, 180]);
     return {
-      transform: [{ rotateY: `${rotate}deg` }],
+      transform: [{ perspective: 1000 }, { rotateY: `${rotate}deg` }],
       opacity: rotateY.value < 90 ? 1 : 0,
     };
   });
@@ -62,34 +65,52 @@ function Card({ emoji, isFlipped, onClick }: CardProps) {
     };
   });
 
+  const cardEntranceStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { rotateZ: `${rotateZ.value}deg` },
+        {
+          scale: interpolate(rotateZ.value, [180, 0], [1, 0.5]), // Cresce de 50% para 100%
+        },
+      ],
+    };
+  });
+
   useEffect(() => {
     rotateY.value = withTiming(isFlipped ? 180 : 0, { duration: 500 });
   }, [isFlipped, rotateY]);
 
+  useEffect(() => {
+    rotateZ.value = withDelay(100 * index, withTiming(180, { duration: 800 }));
+  }, [index, rotateZ]);
+
   return (
     <Pressable className="m-1 h-16 w-16" onPress={handleClick}>
-      {/* View do 3D */}
-      <View className="h-full w-full">
-        {/* Card front */}
-        <Animated.View
-          className={cn(CARD_STYLES.base, CARD_STYLES.front)}
-          style={[frontAnimatedStyle]}
-        >
-          <Text>{emoji}</Text>
-        </Animated.View>
+      {/* Container animado para a rotação Z */}
+      <Animated.View style={[cardEntranceStyle]}>
+        {/* View do 3D */}
+        <View className="h-full w-full">
+          {/* Card front */}
+          <Animated.View
+            className={cn(CARD_STYLES.base, CARD_STYLES.front)}
+            style={[frontAnimatedStyle]}
+          >
+            <Text>{emoji}</Text>
+          </Animated.View>
 
-        {/* Card back */}
-        <Animated.View
-          className={cn(CARD_STYLES.base, CARD_STYLES.back)}
-          style={[backAnimatedStyle]}
-        >
-          <AnimatedSparkles
-            className="h-6 w-6"
-            color="white"
-            style={[sparklesAnimatedStyle]}
-          />
-        </Animated.View>
-      </View>
+          {/* Card back */}
+          <Animated.View
+            className={cn(CARD_STYLES.base, CARD_STYLES.back)}
+            style={[backAnimatedStyle]}
+          >
+            <AnimatedSparkles
+              className="h-6 w-6"
+              color="white"
+              style={[sparklesAnimatedStyle]}
+            />
+          </Animated.View>
+        </View>
+      </Animated.View>
     </Pressable>
   );
 }
