@@ -1,5 +1,10 @@
 import { Href, useRouter } from "expo-router";
-import { Gamepad2, LucideIcon, Sparkle } from "lucide-react-native";
+import {
+  Gamepad2,
+  LucideIcon,
+  PersonStanding,
+  Sparkle,
+} from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
 type Item = {
@@ -18,6 +23,11 @@ const items: Item[] = [
     label: "Memory Game",
     href: "/memory-game",
     icon: Sparkle,
+  },
+  {
+    label: "Hangma Game",
+    href: "/hangman-game",
+    icon: PersonStanding,
   },
 ];
 

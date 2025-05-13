@@ -14,6 +14,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { ArrowLeft } from "lucide-react-native";
 import { useCallback } from "react";
 import { Pressable, Text } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   const router = useRouter();
@@ -41,35 +42,43 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: true,
-          headerTitleStyle: {
-            color: "#F231A5",
-          },
-          headerStyle: {
-            backgroundColor: "black",
-          },
-          headerLeft: headerLeft,
-        }}
-      >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="tic-tac-toe"
-          options={{
-            headerTitle: "Tic Tac Toe",
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: true,
+            headerTitleStyle: {
+              color: "#F231A5",
+            },
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerLeft: headerLeft,
           }}
-        />
-        <Stack.Screen
-          name="memory-game"
-          options={{
-            headerTitle: "Memory Game",
-          }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="light" />
-    </ThemeProvider>
+        >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="tic-tac-toe"
+            options={{
+              headerTitle: "Tic Tac Toe",
+            }}
+          />
+          <Stack.Screen
+            name="memory-game"
+            options={{
+              headerTitle: "Memory Game",
+            }}
+          />
+          <Stack.Screen
+            name="hangman-game"
+            options={{
+              headerTitle: "Hangman Game",
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="light" />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

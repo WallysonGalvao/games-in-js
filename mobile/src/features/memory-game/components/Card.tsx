@@ -68,7 +68,7 @@ function Card({ emoji, isFlipped, index, onClick }: CardProps) {
   const cardEntranceStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { rotateZ: `${rotateZ.value}deg` },
+        { rotateZ: `${rotateZ.value * 2}deg` },
         {
           scale: interpolate(rotateZ.value, [180, 0], [1, 0.5]), // Cresce de 50% para 100%
         },
@@ -86,7 +86,6 @@ function Card({ emoji, isFlipped, index, onClick }: CardProps) {
 
   return (
     <Pressable className="m-1 h-16 w-16" onPress={handleClick}>
-      {/* Container animado para a rotação Z */}
       <Animated.View style={[cardEntranceStyle]}>
         {/* View do 3D */}
         <View className="h-full w-full">
