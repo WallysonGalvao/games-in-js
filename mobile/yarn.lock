@@ -2224,6 +2224,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@shopify/react-native-skia@npm:v2.0.0-next.4":
+  version: 2.0.0-next.4
+  resolution: "@shopify/react-native-skia@npm:2.0.0-next.4"
+  dependencies:
+    canvaskit-wasm: 0.40.0
+    react-reconciler: 0.31.0
+  peerDependencies:
+    react: ">=19.0"
+    react-native: ">=0.78"
+    react-native-reanimated: ^3.0
+  peerDependenciesMeta:
+    react-native:
+      optional: true
+    react-native-reanimated:
+      optional: true
+  bin:
+    setup-skia-web: scripts/setup-canvaskit.js
+  checksum: b7bfc4c078d2d675f6c7fbd2ba681a608054b80d219b19564d845997cdd721f8a5109f5fe4fb87a1c084c0a61d26449674ad140a207adcb7d4aaa2ca98ace2b0
+  languageName: node
+  linkType: hard
+
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
@@ -2817,6 +2838,13 @@ __metadata:
   peerDependencies:
     "@urql/core": ^5.0.0
   checksum: c03c81900bdbd11211ce02e97ca4e8d1b36f08a3ad6fee9e9b23a60a59c9ff266500e2723b21a60d29927c0ba8cf5dec59600d2f615f6918ac50e10100d7e543
+  languageName: node
+  linkType: hard
+
+"@webgpu/types@npm:0.1.21":
+  version: 0.1.21
+  resolution: "@webgpu/types@npm:0.1.21"
+  checksum: b16ddc4d46a3c507a7f243f14b08b96ebbdb4495f9ea703441ad3525dd5e7e4a5f743f2879e51d74c78846f950e7d60c1349670f75cb7ca03ac3ddf51d46aabe
   languageName: node
   linkType: hard
 
@@ -3647,6 +3675,15 @@ __metadata:
   version: 1.0.30001717
   resolution: "caniuse-lite@npm:1.0.30001717"
   checksum: 357fbb230d86d28c0f7005d0c19a2274059ad4f1ed419ebe8754737ec908b567c9745abf0d16eda93417f40913221adc6290eb2f0432bc5bb5364f95bd7eabfa
+  languageName: node
+  linkType: hard
+
+"canvaskit-wasm@npm:0.40.0":
+  version: 0.40.0
+  resolution: "canvaskit-wasm@npm:0.40.0"
+  dependencies:
+    "@webgpu/types": 0.1.21
+  checksum: 983e6b2a32babcbf0a8c29412fee57305d55b7e9603d5ba1e4c68f082fb649433cd1eb8cfddf17dda6dc041ef2c77eb9d9c7f0cba852f6f75f4e78809547d9c5
   languageName: node
   linkType: hard
 
@@ -7692,6 +7729,7 @@ __metadata:
     "@react-navigation/bottom-tabs": ^7.3.10
     "@react-navigation/elements": ^2.3.8
     "@react-navigation/native": ^7.1.6
+    "@shopify/react-native-skia": v2.0.0-next.4
     "@types/lodash.shuffle": ^4.2.9
     "@types/react": ~19.0.10
     babel-plugin-module-resolver: ^5.0.2
@@ -9022,6 +9060,17 @@ __metadata:
   bin:
     react-native: cli.js
   checksum: fa057ecce31920ed426ad354910f60c4bbe089b53d41edfa1dd59af8cafd89578f018063d9c9ed1536ad5f6538fc9849aacc271ee3880dd50eb5cfce56f61b86
+  languageName: node
+  linkType: hard
+
+"react-reconciler@npm:0.31.0":
+  version: 0.31.0
+  resolution: "react-reconciler@npm:0.31.0"
+  dependencies:
+    scheduler: ^0.25.0
+  peerDependencies:
+    react: ^19.0.0
+  checksum: 820c4e4003c5615849bf0cda97d8a55b99af2bb59cc0825882b727f0ad0c4bf4581bb3d25e00beca1164203dbc172f0a8c4725e7aa2fb85e025938722384a84e
   languageName: node
   linkType: hard
 

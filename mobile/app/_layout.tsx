@@ -75,6 +75,12 @@ export default function RootLayout() {
               headerTitle: "Hangman Game",
             }}
           />
+          <Stack.Screen
+            name="snake-game"
+            options={{
+              headerTitle: "Snake Game",
+            }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="light" />
