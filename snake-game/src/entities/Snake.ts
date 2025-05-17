@@ -19,15 +19,51 @@ export class Snake {
     this.nextDirection = { x: 1, y: 0 };
   }
 
+  getHead() {
+    return this.body[0];
+  }
+
+  removeTail() {
+    this.body.pop();
+  }
+
   move() {
+    this.direction = this.nextDirection;
     const newHead = {
-      x: this.body[0].x + this.direction.x,
-      y: this.body[0].y + this.direction.y,
+      x: this.getHead().x + this.direction.x,
+      y: this.getHead().y + this.direction.y,
     };
     // moveu a cabeça
     this.body.unshift(newHead);
-    // remover o rabo
-    this.body.pop();
+  }
+
+  changeDirection(newDir: Position) {
+    const isOpposite =
+      (newDir.x !== 0 && this.direction.x === -newDir.x) ||
+      (newDir.y !== 0 && this.direction.y === -newDir.y);
+
+    if (!isOpposite) {
+      this.nextDirection = newDir;
+    }
+  }
+
+  checkCollisions(gridSize: number) {
+    const nextHead = {
+      x: this.getHead().x + this.nextDirection.x,
+      y: this.getHead().y + this.nextDirection.y,
+    };
+
+    const hitWall =
+      nextHead.x >= gridSize ||
+      nextHead.x < 0 ||
+      nextHead.y < 0 ||
+      nextHead.y >= gridSize;
+
+    const hitSelf = this.body.some(
+      (segment) => segment.x === nextHead.x && segment.y === nextHead.y
+    );
+
+    return hitWall || hitSelf;
   }
 
   draw(ctx: CanvasRenderingContext2D, cellSize: number) {

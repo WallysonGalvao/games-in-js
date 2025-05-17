@@ -1,5 +1,6 @@
 import "../global.css";
 
+import { PressStart2P_400Regular } from "@expo-google-fonts/press-start-2p";
 import {
   DarkTheme,
   DefaultTheme,
@@ -34,6 +35,7 @@ export default function RootLayout() {
 
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    PressStart2P_400Regular,
   });
 
   if (!loaded) {

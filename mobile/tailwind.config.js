@@ -21,6 +21,9 @@ module.exports = {
           200: "#000020",
         },
       },
+      fontFamily: {
+        "press-start-2p": ["PressStart2P_400Regular"],
+      },
     },
   },
   plugins: [],

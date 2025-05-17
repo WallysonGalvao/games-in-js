@@ -1247,6 +1247,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/press-start-2p@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@expo-google-fonts/press-start-2p@npm:0.3.0"
+  checksum: 39d868b8223a2c26cfde502d31989dd6b1bc2b2569ec779f432dc1bb7c14cf4e80623d5ccd0555b3e2bdfc8a221001c866fa44d1eba8ef30a72b04b7785784d2
+  languageName: node
+  linkType: hard
+
 "@expo/cli@npm:0.24.13":
   version: 0.24.13
   resolution: "@expo/cli@npm:0.24.13"
@@ -7725,6 +7732,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.25.2
     "@babel/plugin-proposal-export-namespace-from": ^7.18.9
+    "@expo-google-fonts/press-start-2p": ^0.3.0
     "@expo/vector-icons": ^14.1.0
     "@react-navigation/bottom-tabs": ^7.3.10
     "@react-navigation/elements": ^2.3.8

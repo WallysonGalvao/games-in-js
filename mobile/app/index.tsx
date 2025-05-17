@@ -60,7 +60,7 @@ export default function Index() {
               onPress={() => onPress(item.href)}
               className="group flex items-center gap-2 rounded-lg bg-pink px-6 py-3 text-sm text-white hover:opacity-90"
             >
-              <Text className="text-lg font-bold">{item.label}</Text>
+              <Text className="font text-lg font-bold">{item.label}</Text>
               <item.icon size={30} />
             </Pressable>
           ))}

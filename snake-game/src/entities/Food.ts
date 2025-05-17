@@ -1,4 +1,4 @@
-import { GRID_SIZE } from "../constants";
+import { CELL_SIZE, GRID_SIZE, SPRITE_SIZE, SPRITES } from "../constants";
 
 type Position = {
   x: number;
@@ -12,6 +12,10 @@ export class Food {
     this.position = this.getRandomPosition();
   }
 
+  getPosition() {
+    return this.position;
+  }
+
   getRandomPosition(): Position {
     return {
       x: Math.floor(Math.random() * GRID_SIZE),
@@ -19,13 +23,22 @@ export class Food {
     };
   }
 
-  draw(ctx: CanvasRenderingContext2D, cellSize: number) {
-    ctx.fillStyle = "#e74c3c";
-    ctx.fillRect(
-      this.position.x * cellSize,
-      this.position.y * cellSize,
-      cellSize,
-      cellSize
+  respawn() {
+    this.position = this.getRandomPosition();
+  }
+
+  draw(ctx: CanvasRenderingContext2D, spriteSheet: HTMLImageElement) {
+    const appleCoords = SPRITES.apple;
+    ctx.drawImage(
+      spriteSheet,
+      appleCoords.x,
+      appleCoords.y,
+      SPRITE_SIZE,
+      SPRITE_SIZE,
+      this.position.x * CELL_SIZE,
+      this.position.y * CELL_SIZE,
+      CELL_SIZE,
+      CELL_SIZE
     );
   }
 }
