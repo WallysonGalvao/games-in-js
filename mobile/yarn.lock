@@ -5035,6 +5035,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-audio@npm:~0.4.5":
+  version: 0.4.5
+  resolution: "expo-audio@npm:0.4.5"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: d85a56a3b254c71d0efbe6e85dc89cece3ac53ecfe19d7591e85f85e0111c9c14d30c644bfc84aa9b4c6a2c8e7100a34915e82845925c85407752aadc383b4ae
+  languageName: node
+  linkType: hard
+
 "expo-blur@npm:~14.1.4":
   version: 14.1.4
   resolution: "expo-blur@npm:14.1.4"
@@ -7745,6 +7756,7 @@ __metadata:
     eslint: ^9.25.0
     eslint-config-expo: ~9.2.0
     expo: ~53.0.9
+    expo-audio: ~0.4.5
     expo-blur: ~14.1.4
     expo-constants: ~17.1.6
     expo-font: ~13.3.1

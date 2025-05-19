@@ -1,7 +1,6 @@
-import { Rect } from "@shopify/react-native-skia";
+import { Image, useImage } from "@shopify/react-native-skia";
 import React from "react";
 
-import { colors } from "../constants";
 import { Position } from "../types";
 
 interface FoodProps {
@@ -10,13 +9,15 @@ interface FoodProps {
 }
 
 export const Food = ({ cellSize, position }: FoodProps) => {
+  const image = useImage(require("../assets/images/apple.png"));
+
   return (
-    <Rect
+    <Image
+      image={image}
       x={position.x * cellSize}
       y={position.y * cellSize}
       width={cellSize}
       height={cellSize}
-      color={colors.food}
     />
   );
 };
