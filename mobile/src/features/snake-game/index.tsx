@@ -1,21 +1,12 @@
-import {
-  Canvas,
-  Fill,
-  Line,
-  Text,
-  useFont,
-  vec,
-} from "@shopify/react-native-skia";
+import { Canvas, Fill, Text, useFont } from "@shopify/react-native-skia";
 import React, { useEffect, useState } from "react";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import {
-  CANVAS_SIZE,
   CELL_SIZE,
   colors,
   DIRECTIONS,
-  GRID_SIZE,
   INITIAL_SNAKE_POSITION,
 } from "./constants";
 import { Food } from "./entities/Food";
@@ -24,6 +15,8 @@ import { useFood } from "./hooks/use-food";
 import { useSnake } from "./hooks/use-snake";
 
 import { PressStart2P_400Regular } from "@expo-google-fonts/press-start-2p";
+import { GridLines } from "./components/GridLines";
+import { Tiles } from "./components/Tiles";
 import { GameOverScreen, InitialScreen } from "./ScreenManager";
 
 export default function SnakeGame() {
@@ -36,32 +29,6 @@ export default function SnakeGame() {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-
-  const gridLines = [];
-
-  for (let i = 0; i <= GRID_SIZE; i++) {
-    // Vertical lines
-    gridLines.push(
-      <Line
-        key={`v-${i}`}
-        p1={vec(i * CELL_SIZE, 0)}
-        p2={vec(i * CELL_SIZE, CANVAS_SIZE)}
-        color={colors.line}
-        strokeWidth={1}
-      />,
-    );
-
-    // Horizontal lines
-    gridLines.push(
-      <Line
-        key={`h-${i}`}
-        p1={vec(0, i * CELL_SIZE)}
-        p2={vec(CANVAS_SIZE, i * CELL_SIZE)}
-        color={colors.line}
-        strokeWidth={1}
-      />,
-    );
-  }
 
   const tap = Gesture.Tap().onStart((event) => {
     const { absoluteX, absoluteY } = event;
@@ -131,7 +98,8 @@ export default function SnakeGame() {
     <GestureDetector gesture={tap}>
       <Canvas style={{ flex: 1 }}>
         <Fill color={colors.bg} />
-        {gridLines}
+        <Tiles />
+        <GridLines />
         <Snake cellSize={CELL_SIZE} body={body} />
         <Food cellSize={CELL_SIZE} position={foodPosition} />
         <Text x={10} y={25} text={`Score:${score}`} color="white" font={font} />
