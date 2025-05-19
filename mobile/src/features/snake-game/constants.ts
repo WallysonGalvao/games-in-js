@@ -51,3 +51,5 @@ export const INITIAL_SNAKE_POSITION = [
   { x: 4, y: 10 },
   { x: 3, y: 10 },
 ];
+
+export const INITIAL_DIRECTION = { x: 1, y: 0 };

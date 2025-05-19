@@ -7,6 +7,7 @@ import {
   CELL_SIZE,
   colors,
   DIRECTIONS,
+  INITIAL_DIRECTION,
   INITIAL_SNAKE_POSITION,
 } from "./constants";
 import { Food } from "./entities/Food";
@@ -15,16 +16,32 @@ import { useFood } from "./hooks/use-food";
 import { useSnake } from "./hooks/use-snake";
 
 import { PressStart2P_400Regular } from "@expo-google-fonts/press-start-2p";
-import { GridLines } from "./components/GridLines";
 import { Tiles } from "./components/Tiles";
 import { GameOverScreen, InitialScreen } from "./ScreenManager";
+
+import { createAudioPlayer, useAudioPlayer } from "expo-audio";
+import eatSource from "./assets/sounds/eat.mp3";
+import hitSource from "./assets/sounds/hit.mp3";
+import musicSource from "./assets/sounds/music.mp3";
 
 export default function SnakeGame() {
   const font = useFont(PressStart2P_400Regular, 20);
 
+  const eat = createAudioPlayer(eatSource);
+  const hit = createAudioPlayer(hitSource);
+  const music = useAudioPlayer(musicSource);
+
   const { position: foodPosition, respawn } = useFood();
-  const { body, setBody, move, checkCollisions, changeDirection, addTail } =
-    useSnake();
+  const {
+    body,
+    setBody,
+    direction,
+    setNextDirection,
+    move,
+    checkCollisions,
+    changeDirection,
+    addTail,
+  } = useSnake();
 
   const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -52,34 +69,51 @@ export default function SnakeGame() {
   const reset = () => {
     respawn();
     setScore(0);
-    setBody(INITIAL_SNAKE_POSITION);
     setIsPlaying(true);
     setIsGameOver(false);
+    setBody(INITIAL_SNAKE_POSITION);
+    setNextDirection(INITIAL_DIRECTION);
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isPlaying) return;
+      music.play();
 
       const hasCollided = checkCollisions();
+
       if (!hasCollided) {
         move();
 
         const head = body?.[0];
 
         if (head?.x === foodPosition?.x && head?.y === foodPosition?.y) {
+          eat.play();
           addTail();
           setScore((prev) => prev + 1);
           respawn();
         }
       } else {
+        music.pause();
+        hit.play();
         setIsPlaying(false);
         setIsGameOver(true);
         clearInterval(interval);
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [body, foodPosition, move, checkCollisions, respawn, addTail, isPlaying]);
+  }, [
+    body,
+    foodPosition,
+    move,
+    checkCollisions,
+    respawn,
+    addTail,
+    isPlaying,
+    hit,
+    music,
+    eat,
+  ]);
 
   if (!isPlaying && !isGameOver) {
     return (
@@ -99,8 +133,8 @@ export default function SnakeGame() {
       <Canvas style={{ flex: 1 }}>
         <Fill color={colors.bg} />
         <Tiles />
-        <GridLines />
-        <Snake cellSize={CELL_SIZE} body={body} />
+        {/* <GridLines /> */}
+        <Snake cellSize={CELL_SIZE} body={body} direction={direction} />
         <Food cellSize={CELL_SIZE} position={foodPosition} />
         <Text x={10} y={25} text={`Score:${score}`} color="white" font={font} />
       </Canvas>

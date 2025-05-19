@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useWindowDimensions } from "react-native";
-import { CELL_SIZE, GRID_SIZE, INITIAL_SNAKE_POSITION } from "../constants";
+import {
+  CELL_SIZE,
+  GRID_SIZE,
+  INITIAL_DIRECTION,
+  INITIAL_SNAKE_POSITION,
+} from "../constants";
 import { Position } from "../types";
 
 export const useSnake = () => {
@@ -14,8 +19,9 @@ export const useSnake = () => {
 
   const [body, setBody] = useState<Position[]>(INITIAL_SNAKE_POSITION);
 
-  const [direction, setDirection] = useState<Position>({ x: 1, y: 0 });
-  const [nextDirection, setNextDirection] = useState<Position>({ x: 1, y: 0 });
+  const [direction, setDirection] = useState<Position>(INITIAL_DIRECTION);
+  const [nextDirection, setNextDirection] =
+    useState<Position>(INITIAL_DIRECTION);
 
   const addTail = () => {
     const tail = body[body.length - 1];
@@ -67,6 +73,7 @@ export const useSnake = () => {
     body,
     setBody,
     direction,
+    setNextDirection,
     move,
     checkCollisions,
     changeDirection,

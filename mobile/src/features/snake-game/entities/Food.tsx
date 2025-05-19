@@ -1,7 +1,6 @@
-import { Image, rect, useImage } from "@shopify/react-native-skia";
+import { Image, useImage } from "@shopify/react-native-skia";
 import React from "react";
 
-import { SPRITE_SHEET_SIZE, SPRITE_SIZE } from "../constants";
 import { Position } from "../types";
 
 interface FoodProps {
@@ -10,22 +9,15 @@ interface FoodProps {
 }
 
 export const Food = ({ cellSize, position }: FoodProps) => {
-  const image = useImage(require("../assets/images/sprite_sheet.png"));
-
-  const x = position.x * cellSize;
-  const y = position.y * cellSize;
-
-  const clip = rect(x, y, SPRITE_SIZE, SPRITE_SIZE);
+  const image = useImage(require("../assets/images/apple.png"));
 
   return (
     <Image
       image={image}
       x={position.x * cellSize}
       y={position.y * cellSize}
-      width={SPRITE_SHEET_SIZE}
-      height={SPRITE_SHEET_SIZE}
-      clip={clip}
-      fit="contain"
+      width={cellSize}
+      height={cellSize}
     />
   );
 };
