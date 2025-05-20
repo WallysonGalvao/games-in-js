@@ -83,6 +83,12 @@ export default function RootLayout() {
               headerTitle: "Snake Game",
             }}
           />
+          <Stack.Screen
+            name="infinite-runner"
+            options={{
+              headerTitle: "Infinite Runner",
+            }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="light" />
