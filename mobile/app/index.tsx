@@ -61,7 +61,7 @@ export default function Index() {
   };
 
   return (
-    <View>
+    <View className="flex-1">
       {items.map((item) => (
         <Pressable
           key={item.label}
