@@ -8,25 +8,23 @@ export const useObstacleManager = () => {
   const { width } = useWindowDimensions();
 
   const xPos = useSharedValue(width);
-  const yPos = useSharedValue(SCREEN.height - OBSTACLE.height);
+  const yPos = useSharedValue(SCREEN.height - OBSTACLE.normalHeight);
 
   const [obstacles, setObstacles] = useState<ObstacleProps[]>([
-    { x: xPos, y: yPos },
+    { x: xPos, y: yPos, height: OBSTACLE.normalHeight },
   ]);
 
   const addObstacle = useCallback(() => {
+    const randomHeight =
+      Math.random() > 0.5 ? OBSTACLE.normalHeight : OBSTACLE.greaterHeight;
     xPos.value = width;
-    const newObstacle = { x: xPos, y: yPos };
+    yPos.value = SCREEN.height - randomHeight;
+    const height = randomHeight;
 
-    // setObstacles((prevObstacles) => {
-    //   const visibleObstacles = prevObstacles.filter(
-    //     (obstacle) => obstacle.x.value > -width,
-    //   );
-    //   return [...visibleObstacles, newObstacle];
-    // });
+    const newObstacle = { x: xPos, y: yPos, height };
 
     const visibleObstacles = obstacles.filter(
-      (obstacle) => obstacle.x.value > -width,
+      (obstacle) => obstacle.x.value + OBSTACLE.width > 0,
     );
 
     setObstacles([...visibleObstacles, newObstacle]);

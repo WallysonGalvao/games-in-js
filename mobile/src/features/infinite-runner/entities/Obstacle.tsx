@@ -6,9 +6,10 @@ import { OBSTACLE } from "../constants";
 export type ObstacleProps = {
   x: SharedValue<number>;
   y: SharedValue<number>;
+  height: number;
 };
 
-export const Obstacle = ({ x, y }: ObstacleProps) => {
+export const Obstacle = ({ x, y, height }: ObstacleProps) => {
   const derivedX = useDerivedValue(() => x.value);
   const derivedY = useDerivedValue(() => y.value);
 
@@ -17,7 +18,7 @@ export const Obstacle = ({ x, y }: ObstacleProps) => {
       x={derivedX}
       y={derivedY}
       width={OBSTACLE.width}
-      height={OBSTACLE.height}
+      height={height}
       color={OBSTACLE.color}
     />
   );

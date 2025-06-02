@@ -36,7 +36,7 @@ export default function InfiniteRunner() {
   useFrameCallback(({ timestamp }) => {
     deltatime.value = timestamp - lastTimestamp.value;
     lastTimestamp.value = timestamp;
-    gameSpeed.value += 0.3 * (deltatime.value / 1000);
+    // gameSpeed.value += 0.3 * (deltatime.value / 1000);
   }, true);
 
   // Update obstacle
@@ -78,7 +78,12 @@ export default function InfiniteRunner() {
           <Player x={50} y={yPos} />
           <Group>
             {obstacles.map((obstacle, index) => (
-              <Obstacle key={index} x={obstacle.x} y={obstacle.y} />
+              <Obstacle
+                key={index}
+                x={obstacle.x}
+                y={obstacle.y}
+                height={obstacle.height}
+              />
             ))}
           </Group>
         </Canvas>

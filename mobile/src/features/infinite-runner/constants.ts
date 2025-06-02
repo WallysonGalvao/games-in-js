@@ -14,7 +14,8 @@ export const PLAYER = {
 
 export const OBSTACLE = {
   width: 30,
-  height: 70,
+  normalHeight: 70,
+  greaterHeight: 140,
   color: "#fff000",
 };
 

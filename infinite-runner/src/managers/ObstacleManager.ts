@@ -17,10 +17,32 @@ class ObstacleManager {
     this.ctx = ctx;
   }
 
+  checkCollision(player: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }) {
+    for (const obstacle of this.obstacles) {
+      if (
+        player.x < obstacle.x + obstacle.width &&
+        player.x + player.width > obstacle.x &&
+        player.y < obstacle.y + obstacle.height &&
+        player.y + player.height > obstacle.y
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   createObstacle() {
+    const y = Math.random() < 0.5 ? 70 : 140;
+
     const obstacle = new Obstacle(
       this.canvas.width,
-      this.canvas.height - 70,
+      this.canvas.height - y,
       30,
       70,
       "#fff000"
@@ -52,6 +74,11 @@ class ObstacleManager {
     this.obstacles.forEach((obstacle) => {
       obstacle.x -= gameSpeed;
     });
+
+    // remove obstacles that are off the screen (offscreen)
+    this.obstacles = this.obstacles.filter(
+      (obstacle) => obstacle.x + obstacle.width > 0
+    );
   }
 }
 
