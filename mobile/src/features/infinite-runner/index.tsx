@@ -2,8 +2,18 @@ import { Canvas, Group } from "@shopify/react-native-skia";
 import React from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { runOnJS, useFrameCallback } from "react-native-reanimated";
-import { PLAYER, SCREEN } from "./constants";
+import {
+  runOnJS,
+  useFrameCallback,
+  useSharedValue,
+} from "react-native-reanimated";
+import {
+  INITIAL_GAME_SPEED,
+  PLAYER,
+  SCREEN,
+  SPAWN_MAX_TIME,
+  SPAWN_MIN_TIME,
+} from "./constants";
 import { Obstacle } from "./entities/Obstacle";
 import { Player } from "./entities/Player";
 import { useObstacleManager } from "./hooks/use-obstacle-manager";
@@ -11,23 +21,40 @@ import { usePlayer } from "./hooks/use-player";
 
 export default function InfiniteRunner() {
   const { yPos, velocity, grounded, jump } = usePlayer();
+  const { obstacles, addObstacle, updateObstacles } = useObstacleManager();
 
-  const { obstacles, nextSpawnTime, addObstacle, updateObstacles } =
-    useObstacleManager();
+  const lastTimestamp = useSharedValue(0);
+  const deltatime = useSharedValue(0);
+
+  const nextSpawnTime = useSharedValue(0);
+  const gameSpeed = useSharedValue(INITIAL_GAME_SPEED);
 
   const tap = Gesture.Tap().onStart(() => {
     runOnJS(jump)();
   });
 
+  useFrameCallback(({ timestamp }) => {
+    deltatime.value = timestamp - lastTimestamp.value;
+    lastTimestamp.value = timestamp;
+    gameSpeed.value += 0.3 * (deltatime.value / 1000);
+  }, true);
+
   // Update obstacle
   useFrameCallback(() => {
-    nextSpawnTime.value -= 5;
-
     if (nextSpawnTime.value <= 0) {
       runOnJS(addObstacle)();
-      nextSpawnTime.value = 300; // 1000ms === 1s
+
+      const speedFactor = INITIAL_GAME_SPEED / gameSpeed.value;
+
+      nextSpawnTime.value =
+        Math.floor(
+          Math.random() * (SPAWN_MAX_TIME - SPAWN_MIN_TIME) + SPAWN_MIN_TIME,
+        ) * speedFactor;
     }
-    runOnJS(updateObstacles)();
+
+    nextSpawnTime.value -= deltatime.value;
+
+    runOnJS(updateObstacles)(gameSpeed.value);
   }, true);
 
   // Update player

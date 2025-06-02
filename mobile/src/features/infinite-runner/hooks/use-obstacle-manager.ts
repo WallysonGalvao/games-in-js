@@ -9,7 +9,6 @@ export const useObstacleManager = () => {
 
   const xPos = useSharedValue(width);
   const yPos = useSharedValue(SCREEN.height - OBSTACLE.height);
-  const nextSpawnTime = useSharedValue(0);
 
   const [obstacles, setObstacles] = useState<ObstacleProps[]>([
     { x: xPos, y: yPos },
@@ -33,17 +32,18 @@ export const useObstacleManager = () => {
     setObstacles([...visibleObstacles, newObstacle]);
   }, [obstacles, width, xPos, yPos]);
 
-  const updateObstacles = useCallback(() => {
-    obstacles.forEach((obstacle) => {
-      obstacle.x.value -= 5;
-      return obstacle;
-    });
-  }, [obstacles]);
+  const updateObstacles = useCallback(
+    (gameSpeed: number) => {
+      obstacles.forEach((obstacle) => {
+        obstacle.x.value -= gameSpeed;
+        return obstacle;
+      });
+    },
+    [obstacles],
+  );
 
   return {
     obstacles,
-    nextSpawnTime,
-    setObstacles,
     addObstacle,
     updateObstacles,
   };
