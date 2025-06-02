@@ -1,4 +1,4 @@
-import { Canvas } from "@shopify/react-native-skia";
+import { Canvas, Group } from "@shopify/react-native-skia";
 import React from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -6,33 +6,18 @@ import { runOnJS, useFrameCallback } from "react-native-reanimated";
 import { PLAYER, SCREEN } from "./constants";
 import { Obstacle } from "./entities/Obstacle";
 import { Player } from "./entities/Player";
-import { useObstacle } from "./hooks/use-obstacle";
 import { useObstacleManager } from "./hooks/use-obstacle-manager";
 import { usePlayer } from "./hooks/use-player";
 
 export default function InfiniteRunner() {
   const { yPos, velocity, grounded, jump } = usePlayer();
-  const { xPos: obstacleXPos, yPos: obstacleYPos } = useObstacle();
-  const { obstacles, nextSpawnTime, setObstacles } = useObstacleManager();
+
+  const { obstacles, nextSpawnTime, addObstacle, updateObstacles } =
+    useObstacleManager();
 
   const tap = Gesture.Tap().onStart(() => {
     runOnJS(jump)();
   });
-
-  const addObstacle = () => {
-    console.log("addObstacle");
-    setObstacles([...obstacles, { x: obstacleXPos, y: obstacleYPos }]);
-  };
-
-  const updateObstacle = () => {
-    console.log("updateObstacle");
-    setObstacles(
-      obstacles.map((obstacle) => {
-        obstacle.x.value -= 5;
-        return obstacle;
-      }),
-    );
-  };
 
   // Update obstacle
   useFrameCallback(() => {
@@ -42,7 +27,7 @@ export default function InfiniteRunner() {
       runOnJS(addObstacle)();
       nextSpawnTime.value = 300; // 1000ms === 1s
     }
-    runOnJS(updateObstacle)();
+    runOnJS(updateObstacles)();
   }, true);
 
   // Update player
@@ -64,9 +49,11 @@ export default function InfiniteRunner() {
       <View style={{ flex: 1, backgroundColor: "#0a0c21" }}>
         <Canvas style={{ flex: 1 }}>
           <Player x={50} y={yPos} />
-          {obstacles.map((obstacle, index) => (
-            <Obstacle key={index} x={obstacle.x} y={obstacle.y} />
-          ))}
+          <Group>
+            {obstacles.map((obstacle, index) => (
+              <Obstacle key={index} x={obstacle.x} y={obstacle.y} />
+            ))}
+          </Group>
         </Canvas>
       </View>
     </GestureDetector>

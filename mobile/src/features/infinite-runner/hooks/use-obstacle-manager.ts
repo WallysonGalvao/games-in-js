@@ -16,33 +16,35 @@ export const useObstacleManager = () => {
   ]);
 
   const addObstacle = useCallback(() => {
-    const newObstacle = {
-      id: Math.random().toString(36).substring(7),
-      x: xPos,
-      y: yPos,
-    };
+    xPos.value = width;
+    const newObstacle = { x: xPos, y: yPos };
 
-    setObstacles((prev) => [...prev, newObstacle]);
-  }, [xPos, yPos]);
+    // setObstacles((prevObstacles) => {
+    //   const visibleObstacles = prevObstacles.filter(
+    //     (obstacle) => obstacle.x.value > -width,
+    //   );
+    //   return [...visibleObstacles, newObstacle];
+    // });
+
+    const visibleObstacles = obstacles.filter(
+      (obstacle) => obstacle.x.value > -width,
+    );
+
+    setObstacles([...visibleObstacles, newObstacle]);
+  }, [obstacles, width, xPos, yPos]);
 
   const updateObstacles = useCallback(() => {
-    setObstacles((prev) => {
-      const updated = prev
-        .map((ob) => {
-          ob.x.value -= 5;
-          return ob;
-        })
-        .filter((ob) => ob.x.value > -OBSTACLE.width);
-
-      return updated;
+    obstacles.forEach((obstacle) => {
+      obstacle.x.value -= 5;
+      return obstacle;
     });
-  }, []);
+  }, [obstacles]);
 
   return {
     obstacles,
     nextSpawnTime,
+    setObstacles,
     addObstacle,
     updateObstacles,
-    setObstacles,
   };
 };
